@@ -1,0 +1,1569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>AI-4-Students — Tanuj Industries</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              200: '#bfdbfe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              900: '#1e3a8a'
+            }
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    * { -webkit-tap-highlight-color: transparent; }
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-msg { animation: fadeSlideUp 0.25s ease-out forwards; }
+    @keyframes bounceDot {
+      0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+      40% { transform: scale(1); opacity: 1; }
+    }
+    .dot-1 { animation: bounceDot 1.2s infinite 0s; }
+    .dot-2 { animation: bounceDot 1.2s infinite 0.2s; }
+    .dot-3 { animation: bounceDot 1.2s infinite 0.4s; }
+    /* Custom thin scrollbar */
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+</head>
+<body class="bg-slate-100 dark:bg-slate-950 text-slate-900 dark:text-slate-100 min-h-screen flex justify-center transition-colors duration-200">
+  <!-- Mobile App Shell -->
+  <div id="appShell" class="w-full max-w-md bg-white dark:bg-slate-900 min-h-screen sm:min-h-[820px] sm:my-4 sm:rounded-[32px] sm:shadow-2xl sm:border sm:border-slate-200 dark:sm:border-slate-800 flex flex-col relative overflow-hidden">
+
+    <!-- Top App Header -->
+    <header class="shrink-0 px-4 pt-4 pb-3 bg-gradient-to-r from-blue-600 via-blue-600 to-indigo-600 text-white shadow-sm z-20">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-xl bg-white/20 backdrop-blur flex items-center justify-center shadow-inner">
+            <i data-lucide="sparkles" class="w-5 h-5 text-white"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-1.5">
+              <h1 class="text-base font-bold tracking-tight leading-none">AI-4-Students</h1>
+              <span class="text-[10px] font-semibold px-1.5 py-0.5 rounded-full bg-white/20 text-blue-50">PRO</span>
+            </div>
+            <p class="text-[11px] text-blue-100 font-medium mt-0.5">Tanuj Industries</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-1.5">
+          <button id="headerClassBadge" type="button" class="px-2.5 py-1 rounded-full bg-white/15 hover:bg-white/25 text-xs font-semibold transition cursor-pointer">
+            Class 10
+          </button>
+          <button id="headerDarkBtn" type="button" aria-label="Toggle Dark Mode" class="w-8 h-8 rounded-full bg-white/15 hover:bg-white/25 flex items-center justify-center transition cursor-pointer">
+            <i data-lucide="moon" class="w-4 h-4"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Scrollable Viewport -->
+    <main id="mainContent" class="flex-1 overflow-y-auto no-scrollbar pb-24 bg-slate-50/70 dark:bg-slate-900">
+
+      <!-- ==================== 1. HOME SCREEN ==================== -->
+      <section id="screen-home" class="p-4 space-y-4">
+        <!-- Welcome Hero Card -->
+        <div class="rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-700 text-white p-4 shadow-md relative overflow-hidden">
+          <div class="relative z-10">
+            <p id="homeGreeting" class="text-xs font-medium text-blue-100">Namaste, Aarav 👋</p>
+            <h2 class="text-lg font-bold mt-0.5 leading-snug">What would you like to learn today?</h2>
+            <p class="text-xs text-blue-100 mt-1">Ask in English or हिंदी — Maths, Science, homework, or just chat!</p>
+            <div class="flex items-center gap-2 mt-3">
+              <button id="homeNewChatBtn" type="button" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white text-blue-700 text-xs font-semibold shadow-sm hover:bg-blue-50 transition cursor-pointer">
+                <i data-lucide="plus" class="w-3.5 h-3.5"></i> New Chat
+              </button>
+              <button id="homeVoiceShortcut" type="button" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/15 hover:bg-white/25 text-white text-xs font-semibold transition cursor-pointer">
+                <i data-lucide="mic" class="w-3.5 h-3.5"></i> Voice Ask
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick AI Chat Input Box -->
+        <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-3 shadow-sm">
+          <div id="homeImagePreviewWrap" class="hidden mb-2 flex items-center gap-2 bg-blue-50 dark:bg-slate-700/60 p-2 rounded-xl">
+            <img id="homeImagePreview" src="" alt="Question attachment" class="w-10 h-10 rounded-lg object-cover border border-blue-200" />
+            <span id="homeImageName" class="text-xs text-slate-700 dark:text-slate-200 truncate flex-1"></span>
+            <button id="homeRemoveImgBtn" type="button" class="text-slate-400 hover:text-rose-500 p-1 cursor-pointer">
+              <i data-lucide="x" class="w-4 h-4"></i>
+            </button>
+          </div>
+          <div class="flex items-end gap-2">
+            <label for="homeImageInput" title="Upload question image" class="w-9 h-9 shrink-0 rounded-xl bg-slate-100 dark:bg-slate-700 hover:bg-blue-50 dark:hover:bg-slate-600 text-slate-600 dark:text-slate-300 flex items-center justify-center cursor-pointer transition">
+              <i data-lucide="image-plus" class="w-4 h-4"></i>
+            </label>
+            <input id="homeImageInput" type="file" accept="image/*" class="hidden" />
+            <textarea id="homePromptInput" rows="1" placeholder="Ask anything... e.g. Solve x² - 5x + 6 = 0" class="flex-1 bg-transparent text-sm text-slate-800 dark:text-slate-100 placeholder-slate-400 resize-none focus:outline-none py-2 max-h-24"></textarea>
+            <button id="homeMicBtn" type="button" title="Voice Input" class="w-9 h-9 shrink-0 rounded-xl bg-slate-100 dark:bg-slate-700 hover:bg-blue-50 text-slate-600 dark:text-slate-300 flex items-center justify-center cursor-pointer transition">
+              <i data-lucide="mic" class="w-4 h-4"></i>
+            </button>
+            <button id="homeSendBtn" type="button" title="Send" class="w-9 h-9 shrink-0 rounded-xl bg-blue-600 hover:bg-blue-700 text-white flex items-center justify-center cursor-pointer shadow-sm transition">
+              <i data-lucide="send" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Study Shortcuts -->
+        <div>
+          <div class="flex items-center justify-between mb-2.5">
+            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Study Shortcuts</h3>
+            <button id="homeSeeAllStudyBtn" type="button" class="text-xs font-semibold text-blue-600 dark:text-blue-400 cursor-pointer">Open Study Hub →</button>
+          </div>
+          <div class="grid grid-cols-3 gap-2.5">
+            <button type="button" data-shortcut="maths" class="shortcut-card bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-3 text-left hover:border-blue-400 transition cursor-pointer shadow-sm">
+              <div class="w-8 h-8 rounded-xl bg-blue-100 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 flex items-center justify-center mb-2">
+                <i data-lucide="calculator" class="w-4 h-4"></i>
+              </div>
+              <p class="text-xs font-semibold">Maths</p>
+              <p class="text-[10px] text-slate-500 dark:text-slate-400">Step-by-step</p>
+            </button>
+            <button type="button" data-shortcut="science" class="shortcut-card bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-3 text-left hover:border-blue-400 transition cursor-pointer shadow-sm">
+              <div class="w-8 h-8 rounded-xl bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mb-2">
+                <i data-lucide="atom" class="w-4 h-4"></i>
+              </div>
+              <p class="text-xs font-semibold">Science</p>
+              <p class="text-[10px] text-slate-500 dark:text-slate-400">Diagrams &amp; AI</p>
+            </button>
+            <button type="button" data-shortcut="hindi" class="shortcut-card bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-3 text-left hover:border-blue-400 transition cursor-pointer shadow-sm">
+              <div class="w-8 h-8 rounded-xl bg-amber-100 dark:bg-amber-900/50 text-amber-600 dark:text-amber-400 flex items-center justify-center mb-2">
+                <i data-lucide="languages" class="w-4 h-4"></i>
+              </div>
+              <p class="text-xs font-semibold">हिंदी / Eng</p>
+              <p class="text-[10px] text-slate-500 dark:text-slate-400">Bilingual help</p>
+            </button>
+            <button type="button" data-shortcut="charts" class="shortcut-card bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-3 text-left hover:border-blue-400 transition cursor-pointer shadow-sm">
+              <div class="w-8 h-8 rounded-xl bg-indigo-100 dark:bg-indigo-900/50 text-indigo-600 dark:text-indigo-400 flex items-center justify-center mb-2">
+                <i data-lucide="line-chart" class="w-4 h-4"></i>
+              </div>
+              <p class="text-xs font-semibold">Visual Lab</p>
+              <p class="text-[10px] text-slate-500 dark:text-slate-400">Graphs &amp; Charts</p>
+            </button>
+            <button type="button" data-shortcut="quiz" class="shortcut-card bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-3 text-left hover:border-blue-400 transition cursor-pointer shadow-sm">
+              <div class="w-8 h-8 rounded-xl bg-purple-100 dark:bg-purple-900/50 text-purple-600 dark:text-purple-400 flex items-center justify-center mb-2">
+                <i data-lucide="trophy" class="w-4 h-4"></i>
+              </div>
+              <p class="text-xs font-semibold">Quick Quiz</p>
+              <p class="text-[10px] text-slate-500 dark:text-slate-400">Test yourself</p>
+            </button>
+            <button type="button" data-shortcut="exam" class="shortcut-card bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-3 text-left hover:border-blue-400 transition cursor-pointer shadow-sm">
+              <div class="w-8 h-8 rounded-xl bg-rose-100 dark:bg-rose-900/50 text-rose-600 dark:text-rose-400 flex items-center justify-center mb-2">
+                <i data-lucide="book-open-check" class="w-4 h-4"></i>
+              </div>
+              <p class="text-xs font-semibold">Exam Prep</p>
+              <p class="text-[10px] text-slate-500 dark:text-slate-400">Notes &amp; tips</p>
+            </button>
+          </div>
+        </div>
+
+        <!-- Recent Chat History -->
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Recent Chats</h3>
+            <button id="homeViewHistoryBtn" type="button" class="text-xs font-semibold text-blue-600 dark:text-blue-400 cursor-pointer">View All</button>
+          </div>
+          <div id="homeRecentChats" class="space-y-2"></div>
+        </div>
+      </section>
+
+      <!-- ==================== 2. AI CHAT SCREEN ==================== -->
+      <section id="screen-chat" class="hidden flex flex-col h-[calc(100vh-140px)] sm:h-[680px]">
+        <!-- Chat Toolbar -->
+        <div class="shrink-0 px-4 py-2.5 bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between gap-2">
+          <div class="flex items-center gap-2">
+            <button id="chatNewBtn" type="button" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-blue-50 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 text-xs font-semibold hover:bg-blue-100 transition cursor-pointer">
+              <i data-lucide="plus" class="w-3.5 h-3.5"></i> New
+            </button>
+            <select id="chatLangSelect" class="text-xs font-medium bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-lg px-2 py-1 focus:outline-none cursor-pointer">
+              <option value="auto">🌐 Auto (Eng / हिंदी)</option>
+              <option value="en">🇬🇧 English</option>
+              <option value="hi">🇮🇳 हिंदी</option>
+            </select>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <span id="chatMemoryIndicator" class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300">
+              Memory ON
+            </span>
+            <button id="chatClearBtn" type="button" title="Clear Chat" class="p-1.5 rounded-lg text-slate-400 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-slate-700 transition cursor-pointer">
+              <i data-lucide="trash-2" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Chat Messages Container -->
+        <div id="chatMessages" class="flex-1 overflow-y-auto p-4 space-y-4 no-scrollbar"></div>
+
+        <!-- Typing Indicator -->
+        <div id="typingIndicator" class="hidden px-4 pb-2">
+          <div class="inline-flex items-center gap-1.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl px-3.5 py-2.5 shadow-sm">
+            <span class="w-2 h-2 rounded-full bg-blue-500 dot-1"></span>
+            <span class="w-2 h-2 rounded-full bg-blue-500 dot-2"></span>
+            <span class="w-2 h-2 rounded-full bg-blue-500 dot-3"></span>
+            <span class="text-[11px] text-slate-500 ml-1">Gemini AI is thinking...</span>
+          </div>
+        </div>
+
+        <!-- Chat Input Bar -->
+        <div class="shrink-0 p-3 bg-white dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700">
+          <div id="chatImagePreviewWrap" class="hidden mb-2 flex items-center gap-2 bg-blue-50 dark:bg-slate-700 p-2 rounded-xl">
+            <img id="chatImagePreview" src="" alt="Attached" class="w-10 h-10 rounded-lg object-cover border border-blue-200" />
+            <span id="chatImageName" class="text-xs text-slate-700 dark:text-slate-200 truncate flex-1"></span>
+            <button id="chatRemoveImgBtn" type="button" class="text-slate-400 hover:text-rose-500 p-1 cursor-pointer">
+              <i data-lucide="x" class="w-4 h-4"></i>
+            </button>
+          </div>
+          <div class="flex items-end gap-2">
+            <label for="chatImageInput" title="Upload image question" class="w-9 h-9 shrink-0 rounded-xl bg-slate-100 dark:bg-slate-700 hover:bg-blue-50 text-slate-600 dark:text-slate-300 flex items-center justify-center cursor-pointer transition">
+              <i data-lucide="image" class="w-4 h-4"></i>
+            </label>
+            <input id="chatImageInput" type="file" accept="image/*" class="hidden" />
+            <textarea id="chatInput" rows="1" placeholder="Ask in English or हिंदी..." class="flex-1 bg-slate-100 dark:bg-slate-700/70 rounded-xl px-3 py-2 text-sm text-slate-800 dark:text-slate-100 placeholder-slate-400 resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 max-h-24"></textarea>
+            <button id="chatMicBtn" type="button" title="Voice Input" class="w-9 h-9 shrink-0 rounded-xl bg-slate-100 dark:bg-slate-700 hover:bg-blue-50 text-slate-600 dark:text-slate-300 flex items-center justify-center cursor-pointer transition">
+              <i data-lucide="mic" class="w-4 h-4"></i>
+            </button>
+            <button id="chatSendBtn" type="button" title="Send" class="w-9 h-9 shrink-0 rounded-xl bg-blue-600 hover:bg-blue-700 text-white flex items-center justify-center cursor-pointer shadow-sm transition">
+              <i data-lucide="send" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== 3. STUDY DASHBOARD & VISUAL LAB ==================== -->
+      <section id="screen-study" class="hidden p-4 space-y-4">
+        <!-- Class 1-12 Selector -->
+        <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-4 shadow-sm">
+          <div class="flex items-center justify-between mb-2">
+            <h2 class="text-sm font-bold">Student Dashboard</h2>
+            <span id="studyProgressBadge" class="text-xs font-semibold text-blue-600 dark:text-blue-400">68% Weekly Goal</span>
+          </div>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mb-2.5">Select your class (1 to 12):</p>
+          <div id="classPills" class="flex gap-1.5 overflow-x-auto no-scrollbar pb-1"></div>
+        </div>
+
+        <!-- Study Sub-Tabs -->
+        <div class="grid grid-cols-3 gap-1.5 bg-slate-200/70 dark:bg-slate-800 p-1 rounded-xl">
+          <button type="button" data-studytab="subjects" class="study-tab-btn py-1.5 rounded-lg text-xs font-semibold bg-white dark:bg-slate-700 text-blue-600 dark:text-blue-300 shadow-sm cursor-pointer">Subjects</button>
+          <button type="button" data-studytab="visuals" class="study-tab-btn py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 cursor-pointer">Charts &amp; Diagrams</button>
+          <button type="button" data-studytab="quiz" class="study-tab-btn py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 cursor-pointer">Quiz &amp; Notes</button>
+        </div>
+
+        <!-- Sub-Tab 1: Subjects & Tools -->
+        <div id="study-subjects" class="space-y-4">
+          <div class="grid grid-cols-2 gap-2.5">
+            <button type="button" data-subject="Maths" class="subject-btn bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-3.5 text-left hover:border-blue-500 transition cursor-pointer shadow-sm">
+              <div class="flex items-center justify-between mb-1.5">
+                <span class="text-lg">📐</span>
+                <span class="text-[10px] font-semibold text-blue-600 bg-blue-50 dark:bg-blue-900/40 px-2 py-0.5 rounded-full">78%</span>
+              </div>
+              <p class="text-sm font-bold">Maths</p>
+              <p class="text-[11px] text-slate-500 dark:text-slate-400">Algebra, Geometry, Calc</p>
+            </button>
+            <button type="button" data-subject="Science" class="subject-btn bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-3.5 text-left hover:border-blue-500 transition cursor-pointer shadow-sm">
+              <div class="flex items-center justify-between mb-1.5">
+                <span class="text-lg">🔬</span>
+                <span class="text-[10px] font-semibold text-emerald-600 bg-emerald-50 dark:bg-emerald-900/40 px-2 py-0.5 rounded-full">82%</span>
+              </div>
+              <p class="text-sm font-bold">Science</p>
+              <p class="text-[11px] text-slate-500 dark:text-slate-400">Physics, Chem, Bio</p>
+            </button>
+            <button type="button" data-subject="English" class="subject-btn bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-3.5 text-left hover:border-blue-500 transition cursor-pointer shadow-sm">
+              <div class="flex items-center justify-between mb-1.5">
+                <span class="text-lg">📖</span>
+                <span class="text-[10px] font-semibold text-indigo-600 bg-indigo-50 dark:bg-indigo-900/40 px-2 py-0.5 rounded-full">74%</span>
+              </div>
+              <p class="text-sm font-bold">English</p>
+              <p class="text-[11px] text-slate-500 dark:text-slate-400">Grammar, Essays, Lit</p>
+            </button>
+            <button type="button" data-subject="Hindi" class="subject-btn bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-3.5 text-left hover:border-blue-500 transition cursor-pointer shadow-sm">
+              <div class="flex items-center justify-between mb-1.5">
+                <span class="text-lg">🪔</span>
+                <span class="text-[10px] font-semibold text-amber-600 bg-amber-50 dark:bg-amber-900/40 px-2 py-0.5 rounded-full">85%</span>
+              </div>
+              <p class="text-sm font-bold">Hindi (हिंदी)</p>
+              <p class="text-[11px] text-slate-500 dark:text-slate-400">व्याकरण, निबंध, साहित्य</p>
+            </button>
+            <button type="button" data-subject="Social Science" class="subject-btn bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-3.5 text-left hover:border-blue-500 transition cursor-pointer shadow-sm">
+              <div class="flex items-center justify-between mb-1.5">
+                <span class="text-lg">🌍</span>
+                <span class="text-[10px] font-semibold text-purple-600 bg-purple-50 dark:bg-purple-900/40 px-2 py-0.5 rounded-full">64%</span>
+              </div>
+              <p class="text-sm font-bold">Social Science</p>
+              <p class="text-[11px] text-slate-500 dark:text-slate-400">History, Civics, Geo</p>
+            </button>
+            <button type="button" data-subject="Computer" class="subject-btn bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-3.5 text-left hover:border-blue-500 transition cursor-pointer shadow-sm">
+              <div class="flex items-center justify-between mb-1.5">
+                <span class="text-lg">💻</span>
+                <span class="text-[10px] font-semibold text-cyan-600 bg-cyan-50 dark:bg-cyan-900/40 px-2 py-0.5 rounded-full">90%</span>
+              </div>
+              <p class="text-sm font-bold">Computer</p>
+              <p class="text-[11px] text-slate-500 dark:text-slate-400">Python, AI, Web</p>
+            </button>
+          </div>
+
+          <!-- Study Tools -->
+          <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-4 shadow-sm">
+            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-3">Study Modes</h3>
+            <div class="flex flex-wrap gap-2">
+              <button type="button" data-mode="Homework Help" class="study-mode-btn px-3 py-1.5 rounded-xl bg-blue-50 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 text-xs font-semibold cursor-pointer hover:bg-blue-100">📝 Homework Help</button>
+              <button type="button" data-mode="Exam Preparation" class="study-mode-btn px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-semibold cursor-pointer hover:bg-blue-50">🎯 Exam Prep</button>
+              <button type="button" data-mode="Revision" class="study-mode-btn px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-semibold cursor-pointer hover:bg-blue-50">⚡ Quick Revision</button>
+            </div>
+          </div>
+
+          <!-- Learning Progress Chart -->
+          <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-4 shadow-sm">
+            <h3 class="text-sm font-bold mb-1">Weekly Learning Progress</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mb-3">Subject mastery &amp; comparison</p>
+            <div class="relative h-52">
+              <canvas id="progressChart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sub-Tab 2: Charts & Visual Learning -->
+        <div id="study-visuals" class="hidden space-y-4">
+          <!-- Maths Graph Section -->
+          <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-4 shadow-sm">
+            <div class="flex items-center justify-between mb-2">
+              <div>
+                <h3 class="text-sm font-bold">Maths Graph Lab</h3>
+                <p id="mathFormulaLabel" class="text-xs text-blue-600 dark:text-blue-400 font-semibold">y = 1x² + 0x + 0</p>
+              </div>
+              <select id="mathGraphType" class="text-xs bg-slate-100 dark:bg-slate-700 rounded-lg px-2 py-1 font-medium">
+                <option value="quadratic">Quadratic (ax²+bx+c)</option>
+                <option value="linear">Linear (ax + b)</option>
+                <option value="sine">Sine Wave (a·sin(x))</option>
+              </select>
+            </div>
+            <div class="relative h-52 mb-3">
+              <canvas id="mathGraphCanvas"></canvas>
+            </div>
+            <div class="grid grid-cols-2 gap-3 text-xs">
+              <div>
+                <label class="flex justify-between font-medium text-slate-600 dark:text-slate-300">
+                  <span>Slope / Scale (a)</span><span id="paramAVal">1</span>
+                </label>
+                <input id="paramASlider" type="range" min="-3" max="3" step="0.5" value="1" class="w-full accent-blue-600" />
+              </div>
+              <div>
+                <label class="flex justify-between font-medium text-slate-600 dark:text-slate-300">
+                  <span>Shift (c)</span><span id="paramCVal">0</span>
+                </label>
+                <input id="paramCSlider" type="range" min="-5" max="5" step="1" value="0" class="w-full accent-blue-600" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Science Diagram Section -->
+          <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-4 shadow-sm">
+            <div class="flex items-center justify-between mb-3">
+              <h3 class="text-sm font-bold">Science Visual Diagram</h3>
+              <span class="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700">Photosynthesis</span>
+            </div>
+            <div class="bg-gradient-to-b from-sky-50 to-emerald-50 dark:from-slate-700 dark:to-slate-800 rounded-xl p-3 border border-emerald-100 dark:border-slate-600">
+              <svg viewBox="0 0 320 170" class="w-full h-auto" role="img" aria-label="Photosynthesis Diagram">
+                <!-- Sun -->
+                <circle cx="48" cy="36" r="20" fill="#facc15" />
+                <text x="48" y="70" text-anchor="middle" font-size="10" font-weight="600" fill="#b45309">Sunlight</text>
+                <!-- Arrow Sun -> Leaf -->
+                <path d="M72 45 L128 72" stroke="#f59e0b" stroke-width="2.5" stroke-dasharray="4 3" marker-end="url(#arrow)" />
+                <!-- Leaf / Plant -->
+                <path d="M160 145 L160 95" stroke="#15803d" stroke-width="5" stroke-linecap="round" />
+                <ellipse cx="160" cy="82" rx="44" ry="22" fill="#22c55e" stroke="#15803d" stroke-width="2" />
+                <text x="160" y="86" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff">Chlorophyll</text>
+                <!-- Inputs & Outputs -->
+                <rect x="12" y="102" width="76" height="24" rx="6" fill="#dbeafe" />
+                <text x="50" y="118" text-anchor="middle" font-size="10" font-weight="600" fill="#1d4ed8">CO₂ + Water</text>
+                <path d="M90 114 L125 96" stroke="#2563eb" stroke-width="2" />
+                <rect x="224" y="34" width="84" height="24" rx="6" fill="#dcfce7" />
+                <text x="266" y="50" text-anchor="middle" font-size="10" font-weight="600" fill="#15803d">Oxygen (O₂)</text>
+                <path d="M198 72 L226 52" stroke="#16a34a" stroke-width="2" />
+                <rect x="224" y="102" width="84" height="24" rx="6" fill="#fef3c7" />
+                <text x="266" y="118" text-anchor="middle" font-size="10" font-weight="600" fill="#b45309">Glucose (Food)</text>
+                <path d="M202 88 L224 110" stroke="#d97706" stroke-width="2" />
+              </svg>
+            </div>
+            <p class="text-xs text-slate-600 dark:text-slate-300 mt-2.5 leading-relaxed">
+              <strong>Formula:</strong> 6CO₂ + 6H₂O + Sunlight → C₆H₁₂O₆ (Glucose) + 6O₂
+            </p>
+          </div>
+
+          <!-- Comparison Table -->
+          <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-4 shadow-sm">
+            <h3 class="text-sm font-bold mb-2">Comparison Chart: Acids vs Bases</h3>
+            <div class="overflow-x-auto">
+              <table class="w-full text-xs text-left border-collapse">
+                <thead>
+                  <tr class="bg-blue-50 dark:bg-slate-700 text-blue-800 dark:text-blue-200">
+                    <th class="p-2 rounded-tl-lg">Property</th>
+                    <th class="p-2">Acids</th>
+                    <th class="p-2 rounded-tr-lg">Bases</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100 dark:divide-slate-700">
+                  <tr><td class="p-2 font-medium">pH Value</td><td class="p-2">Less than 7</td><td class="p-2">Greater than 7</td></tr>
+                  <tr><td class="p-2 font-medium">Taste</td><td class="p-2">Sour (e.g. Lemon)</td><td class="p-2">Bitter (e.g. Soap)</td></tr>
+                  <tr><td class="p-2 font-medium">Litmus Test</td><td class="p-2">Blue → Red</td><td class="p-2">Red → Blue</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sub-Tab 3: Quick Quiz & Notes -->
+        <div id="study-quiz" class="hidden space-y-4">
+          <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-4 shadow-sm">
+            <div class="flex items-center justify-between mb-3">
+              <h3 class="text-sm font-bold">Quick Practice Quiz</h3>
+              <span id="quizScoreBadge" class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-blue-100 text-blue-700">Score: 0/3</span>
+            </div>
+            <p id="quizQuestionText" class="text-sm font-semibold mb-3"></p>
+            <div id="quizOptions" class="space-y-2"></div>
+            <div class="flex items-center justify-between mt-4">
+              <span id="quizFeedback" class="text-xs font-semibold"></span>
+              <button id="quizNextBtn" type="button" class="px-3.5 py-1.5 rounded-xl bg-blue-600 text-white text-xs font-semibold cursor-pointer">Next Question →</button>
+            </div>
+          </div>
+
+          <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-4 shadow-sm">
+            <h3 class="text-sm font-bold mb-2">My Quick Study Notes</h3>
+            <textarea id="studyNotesArea" rows="4" placeholder="Write revision points here..." class="w-full rounded-xl border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 p-2.5 text-xs focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+            <div class="flex justify-end mt-2">
+              <button id="saveStudyNoteBtn" type="button" class="px-3 py-1.5 rounded-xl bg-slate-900 dark:bg-blue-600 text-white text-xs font-semibold cursor-pointer">Save Note</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== 4. HISTORY SCREEN ==================== -->
+      <section id="screen-history" class="hidden p-4 space-y-4">
+        <div class="flex items-center justify-between">
+          <h2 class="text-base font-bold">Chat History</h2>
+          <button id="clearAllHistoryBtn" type="button" class="text-xs font-semibold text-rose-600 hover:underline cursor-pointer">Clear All</button>
+        </div>
+        <div class="relative">
+          <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3 top-2.5"></i>
+          <input id="historySearchInput" type="text" placeholder="Search past chats..." class="w-full pl-9 pr-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        </div>
+        <div id="historyList" class="space-y-2.5"></div>
+      </section>
+
+      <!-- ==================== 5. PROFILE & SETTINGS SCREEN ==================== -->
+      <section id="screen-profile" class="hidden p-4 space-y-4">
+        <!-- User Card -->
+        <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-4 shadow-sm flex items-center gap-3.5">
+          <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 text-white flex items-center justify-center text-xl font-bold shadow">
+            <span id="profileAvatarInitial">A</span>
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center gap-1.5">
+              <h2 id="profileNameDisplay" class="text-base font-bold truncate">Aarav Sharma</h2>
+              <span id="profileVerifiedBadge" class="text-[10px] font-semibold px-1.5 py-0.5 rounded-full bg-emerald-100 text-emerald-700">Verified</span>
+            </div>
+            <p id="profileEmailDisplay" class="text-xs text-slate-500 dark:text-slate-400 truncate">aarav.student@example.com</p>
+            <p id="profileClassDisplay" class="text-xs font-semibold text-blue-600 dark:text-blue-400 mt-0.5">Class 10 • CBSE</p>
+          </div>
+          <button id="openAuthModalBtn" type="button" class="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-700 text-xs font-semibold hover:bg-blue-50 cursor-pointer">
+            Account
+          </button>
+        </div>
+
+        <!-- Quick Settings Toggles -->
+        <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 divide-y divide-slate-100 dark:divide-slate-700 shadow-sm">
+          <div class="p-3.5 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-8 rounded-xl bg-indigo-50 dark:bg-indigo-900/40 text-indigo-600 flex items-center justify-center"><i data-lucide="brain" class="w-4 h-4"></i></div>
+              <div>
+                <p class="text-sm font-semibold">AI Memory</p>
+                <p class="text-[11px] text-slate-500 dark:text-slate-400">Remember class, language &amp; preferences</p>
+              </div>
+            </div>
+            <input id="memoryToggle" type="checkbox" checked class="w-4 h-4 accent-blue-600 cursor-pointer" />
+          </div>
+
+          <div class="p-3.5 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-8 rounded-xl bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 flex items-center justify-center"><i data-lucide="moon" class="w-4 h-4"></i></div>
+              <div>
+                <p class="text-sm font-semibold">Dark Mode</p>
+                <p class="text-[11px] text-slate-500 dark:text-slate-400">Easy on the eyes at night</p>
+              </div>
+            </div>
+            <input id="darkModeToggle" type="checkbox" class="w-4 h-4 accent-blue-600 cursor-pointer" />
+          </div>
+
+          <div class="p-3.5 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-8 rounded-xl bg-amber-50 dark:bg-amber-900/40 text-amber-600 flex items-center justify-center"><i data-lucide="languages" class="w-4 h-4"></i></div>
+              <div>
+                <p class="text-sm font-semibold">Preferred Language</p>
+                <p class="text-[11px] text-slate-500 dark:text-slate-400">AI response language</p>
+              </div>
+            </div>
+            <select id="profileLangSelect" class="text-xs font-semibold bg-slate-100 dark:bg-slate-700 rounded-lg px-2 py-1">
+              <option value="auto">Bilingual</option>
+              <option value="en">English</option>
+              <option value="hi">हिंदी</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- AI Memory Manager -->
+        <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-4 shadow-sm space-y-3">
+          <div class="flex items-center justify-between">
+            <div>
+              <h3 class="text-sm font-bold">Saved AI Memories</h3>
+              <p class="text-[11px] text-slate-500 dark:text-slate-400">Private to you — never shared with other users.</p>
+            </div>
+            <button id="addMemoryBtn" type="button" class="px-2.5 py-1 rounded-lg bg-blue-50 dark:bg-blue-900/40 text-blue-600 dark:text-blue-300 text-xs font-semibold cursor-pointer">+ Add</button>
+          </div>
+          <div id="memoryList" class="space-y-2"></div>
+        </div>
+
+        <!-- Settings Links -->
+        <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 divide-y divide-slate-100 dark:divide-slate-700 shadow-sm text-sm">
+          <button type="button" data-info="privacy" class="info-modal-btn w-full p-3.5 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-700/50 cursor-pointer">
+            <span class="flex items-center gap-2.5 font-medium"><i data-lucide="shield-check" class="w-4 h-4 text-emerald-600"></i> Privacy &amp; Data Consent</span>
+            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+          </button>
+          <button type="button" data-info="help" class="info-modal-btn w-full p-3.5 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-700/50 cursor-pointer">
+            <span class="flex items-center gap-2.5 font-medium"><i data-lucide="help-circle" class="w-4 h-4 text-blue-600"></i> Help &amp; Support</span>
+            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+          </button>
+          <button type="button" data-info="about" class="info-modal-btn w-full p-3.5 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-700/50 cursor-pointer">
+            <span class="flex items-center gap-2.5 font-medium"><i data-lucide="info" class="w-4 h-4 text-indigo-600"></i> About AI-4-Students</span>
+            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+          </button>
+          <button id="logoutBtn" type="button" class="w-full p-3.5 flex items-center justify-between text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/20 cursor-pointer">
+            <span class="flex items-center gap-2.5 font-semibold"><i data-lucide="log-out" class="w-4 h-4"></i> Log Out</span>
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <!-- Bottom Navigation Bar -->
+    <nav class="shrink-0 absolute bottom-0 inset-x-0 bg-white/95 dark:bg-slate-900/95 backdrop-blur border-t border-slate-200 dark:border-slate-800 px-2 py-1.5 flex items-center justify-around z-30">
+      <button type="button" data-nav="home" class="nav-btn flex flex-col items-center gap-0.5 px-3 py-1 rounded-xl text-blue-600 dark:text-blue-400 cursor-pointer">
+        <i data-lucide="home" class="w-5 h-5"></i>
+        <span class="text-[10px] font-semibold">Home</span>
+      </button>
+      <button type="button" data-nav="chat" class="nav-btn flex flex-col items-center gap-0.5 px-3 py-1 rounded-xl text-slate-400 hover:text-slate-700 cursor-pointer">
+        <i data-lucide="message-square" class="w-5 h-5"></i>
+        <span class="text-[10px] font-semibold">Chat</span>
+      </button>
+      <button type="button" data-nav="study" class="nav-btn flex flex-col items-center gap-0.5 px-3 py-1 rounded-xl text-slate-400 hover:text-slate-700 cursor-pointer">
+        <i data-lucide="graduation-cap" class="w-5 h-5"></i>
+        <span class="text-[10px] font-semibold">Study</span>
+      </button>
+      <button type="button" data-nav="history" class="nav-btn flex flex-col items-center gap-0.5 px-3 py-1 rounded-xl text-slate-400 hover:text-slate-700 cursor-pointer">
+        <i data-lucide="history" class="w-5 h-5"></i>
+        <span class="text-[10px] font-semibold">History</span>
+      </button>
+      <button type="button" data-nav="profile" class="nav-btn flex flex-col items-center gap-0.5 px-3 py-1 rounded-xl text-slate-400 hover:text-slate-700 cursor-pointer">
+        <i data-lucide="user" class="w-5 h-5"></i>
+        <span class="text-[10px] font-semibold">Profile</span>
+      </button>
+    </nav>
+
+    <!-- ==================== AUTHENTICATION MODAL ==================== -->
+    <div id="authModal" class="hidden absolute inset-0 bg-slate-900/60 backdrop-blur-sm z-40 flex items-center justify-center p-4">
+      <div class="w-full max-w-sm bg-white dark:bg-slate-800 rounded-3xl p-5 shadow-2xl border border-slate-200 dark:border-slate-700 space-y-4">
+        <div class="flex items-center justify-between">
+          <div>
+            <h3 id="authTitle" class="text-lg font-bold">Welcome Back</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400">AI-4-Students • Tanuj Industries</p>
+          </div>
+          <button id="closeAuthBtn" type="button" class="p-1.5 rounded-full bg-slate-100 dark:bg-slate-700 text-slate-500 cursor-pointer">
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
+        </div>
+
+        <div class="flex gap-1 bg-slate-100 dark:bg-slate-700 p-1 rounded-xl text-xs font-semibold">
+          <button type="button" data-authmode="login" class="auth-tab flex-1 py-1.5 rounded-lg bg-white dark:bg-slate-600 text-blue-600 dark:text-white shadow-sm cursor-pointer">Login</button>
+          <button type="button" data-authmode="signup" class="auth-tab flex-1 py-1.5 rounded-lg text-slate-500 dark:text-slate-300 cursor-pointer">Sign Up</button>
+          <button type="button" data-authmode="forgot" class="auth-tab flex-1 py-1.5 rounded-lg text-slate-500 dark:text-slate-300 cursor-pointer">Reset</button>
+        </div>
+
+        <form id="authForm" class="space-y-3">
+          <div id="authNameWrap" class="hidden">
+            <label class="text-xs font-semibold text-slate-600 dark:text-slate-300">Full Name</label>
+            <input id="authNameInput" type="text" placeholder="e.g. Aarav Sharma" class="w-full mt-1 px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 text-sm" />
+          </div>
+          <div>
+            <label class="text-xs font-semibold text-slate-600 dark:text-slate-300">Email</label>
+            <input id="authEmailInput" type="email" required placeholder="student@example.com" class="w-full mt-1 px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 text-sm" />
+          </div>
+          <div id="authPasswordWrap">
+            <label class="text-xs font-semibold text-slate-600 dark:text-slate-300">Password</label>
+            <input id="authPasswordInput" type="password" placeholder="••••••••" class="w-full mt-1 px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 text-sm" />
+          </div>
+          <button id="authSubmitBtn" type="submit" class="w-full py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold shadow-sm cursor-pointer">
+            Sign In
+          </button>
+        </form>
+
+        <div id="authVerifyBanner" class="hidden p-2.5 rounded-xl bg-amber-50 dark:bg-amber-900/30 border border-amber-200 text-xs text-amber-800 dark:text-amber-200 flex items-center justify-between">
+          <span>Verification email sent!</span>
+          <button id="authVerifyNowBtn" type="button" class="font-bold underline cursor-pointer">Mark Verified</button>
+        </div>
+
+        <button id="googleSignInBtn" type="button" class="w-full py-2.5 rounded-xl border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700 hover:bg-slate-50 text-xs font-semibold flex items-center justify-center gap-2 cursor-pointer">
+          <span class="text-base">G</span> Continue with Google (Firebase)
+        </button>
+      </div>
+    </div>
+
+    <!-- ==================== GENERIC MODAL (MEMORY / INFO / VOICE) ==================== -->
+    <div id="genericModal" class="hidden absolute inset-0 bg-slate-900/60 backdrop-blur-sm z-40 flex items-center justify-center p-4">
+      <div class="w-full max-w-sm bg-white dark:bg-slate-800 rounded-3xl p-5 shadow-2xl border border-slate-200 dark:border-slate-700 space-y-3">
+        <div class="flex items-center justify-between">
+          <h3 id="genericModalTitle" class="text-base font-bold">Title</h3>
+          <button id="closeGenericModalBtn" type="button" class="p-1.5 rounded-full bg-slate-100 dark:bg-slate-700 text-slate-500 cursor-pointer">
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
+        </div>
+        <div id="genericModalBody" class="text-xs text-slate-600 dark:text-slate-300 space-y-2"></div>
+      </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toastBar" class="hidden absolute top-16 left-1/2 -translate-x-1/2 z-50 px-4 py-2 rounded-full bg-slate-900 dark:bg-blue-600 text-white text-xs font-semibold shadow-lg whitespace-nowrap"></div>
+  </div>
+
+  <script>
+    // ==================== STATE ====================
+    const state = {
+      activeNav: 'home',
+      user: { name: 'Aarav Sharma', email: 'aarav.student@example.com', verified: true, classLevel: 10 },
+      darkMode: false,
+      memoryEnabled: true,
+      language: 'auto',
+      memories: [
+        { id: 'm1', label: 'Class', value: 'Class 10 (CBSE)' },
+        { id: 'm2', label: 'Language', value: 'English & Hindi (Bilingual)' },
+        { id: 'm3', label: 'Learning Style', value: 'Step-by-step explanations with examples' }
+      ],
+      chats: [
+        {
+          id: 'c1',
+          title: 'Quadratic Equations Step-by-Step',
+          subject: 'Maths',
+          updatedAt: 'Today, 6:40 PM',
+          messages: [
+            { id: 'msg1', role: 'user', text: 'Solve x² - 5x + 6 = 0 step by step' },
+            {
+              id: 'msg2',
+              role: 'ai',
+              html: `<h4>Step-by-Step Solution</h4>
+              <p>Let's solve <strong>x² - 5x + 6 = 0</strong> by factoring:</p>
+              <ol>
+                <li><strong>Find two numbers</strong> that multiply to <strong>+6</strong> and add to <strong>-5</strong>: those are <strong>-2</strong> and <strong>-3</strong>.</li>
+                <li><strong>Split the middle term:</strong> x² - 2x - 3x + 6 = 0</li>
+                <li><strong>Factor by grouping:</strong> x(x - 2) - 3(x - 2) = 0 → (x - 2)(x - 3) = 0</li>
+                <li><strong>Final Answer:</strong> <strong>x = 2</strong> or <strong>x = 3</strong> ✨</li>
+              </ol>`
+            }
+          ]
+        },
+        {
+          id: 'c2',
+          title: 'प्रकाश संश्लेषण (Photosynthesis)',
+          subject: 'Science',
+          updatedAt: 'Yesterday',
+          messages: [
+            { id: 'msg3', role: 'user', text: 'Photosynthesis ko Hindi mein samjhao' },
+            {
+              id: 'msg4',
+              role: 'ai',
+              html: `<h4>प्रकाश संश्लेषण (Photosynthesis) 🌱</h4>
+              <p>यह वह प्रक्रिया है जिससे हरे पौधे <strong>सूर्य के प्रकाश</strong>, <strong>जल (H₂O)</strong> और <strong>कार्बन डाइऑक्साइड (CO₂)</strong> की मदद से अपना भोजन (ग्लूकोज़) बनाते हैं।</p>
+              <ul>
+                <li><strong>स्थान:</strong> पत्तियों में मौजूद क्लोरोप्लास्ट (Chlorophyll)</li>
+                <li><strong>उत्पाद:</strong> ग्लूकोज़ + ऑक्सीजन (O₂)</li>
+              </ul>`
+            }
+          ]
+        }
+      ],
+      activeChatId: 'c1',
+      pendingImage: null,
+      quizIndex: 0,
+      quizScore: 0,
+      quizAnswered: false,
+      authMode: 'login'
+    };
+    // Set this to your deployed HTTPS backend URL (from server/server.js) so all students use your server's Gemini key automatically.
+    const BACKEND_CHAT_URL = '';
+
+    const QUIZ_BANK = [
+      { q: 'What is the powerhouse of the cell?', options: ['Nucleus', 'Mitochondria', 'Ribosome', 'Golgi body'], answer: 1 },
+      { q: 'If 2x + 6 = 14, what is the value of x?', options: ['3', '4', '5', '8'], answer: 1 },
+      { q: 'Which gas do plants release during photosynthesis?', options: ['Nitrogen', 'Carbon Dioxide', 'Oxygen', 'Hydrogen'], answer: 2 }
+    ];
+
+    // ==================== HELPERS ====================
+    const $ = (id) => document.getElementById(id);
+
+    function showToast(msg) {
+      const t = $('toastBar');
+      t.textContent = msg;
+      t.classList.remove('hidden');
+      clearTimeout(t._timer);
+      t._timer = setTimeout(() => t.classList.add('hidden'), 2400);
+    }
+
+    function escapeHtml(str) {
+      return str.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    }
+
+    function copyText(text) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => showToast('Copied to clipboard!')).catch(() => fallbackCopy(text));
+      } else {
+        fallbackCopy(text);
+      }
+    }
+
+    function fallbackCopy(text) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); showToast('Copied to clipboard!'); } catch (e) { showToast('Copy failed'); }
+      document.body.removeChild(ta);
+    }
+
+    // ==================== NAVIGATION ====================
+    function navigateTo(screen) {
+      state.activeNav = screen;
+      ['home', 'chat', 'study', 'history', 'profile'].forEach((s) => {
+        $(`screen-${s}`).classList.toggle('hidden', s !== screen);
+      });
+      document.querySelectorAll('.nav-btn').forEach((btn) => {
+        const active = btn.dataset.nav === screen;
+        btn.className = `nav-btn flex flex-col items-center gap-0.5 px-3 py-1 rounded-xl cursor-pointer ${active ? 'text-blue-600 dark:text-blue-400' : 'text-slate-400 hover:text-slate-700'}`;
+      });
+      if (screen === 'chat') renderChat();
+      if (screen === 'history') renderHistory();
+      if (screen === 'profile') renderMemories();
+      if (screen === 'study') initCharts();
+    }
+
+    document.querySelectorAll('.nav-btn').forEach((btn) => {
+      btn.addEventListener('click', () => navigateTo(btn.dataset.nav));
+    });
+
+    // ==================== DARK MODE ====================
+    function setDarkMode(enabled) {
+      state.darkMode = enabled;
+      document.documentElement.classList.toggle('dark', enabled);
+      $('darkModeToggle').checked = enabled;
+      if (progressChartInstance) initCharts();
+    }
+    $('headerDarkBtn').addEventListener('click', () => setDarkMode(!state.darkMode));
+    $('darkModeToggle').addEventListener('change', (e) => setDarkMode(e.target.checked));
+
+    // ==================== HOME SCREEN ====================
+    function renderHomeRecent() {
+      const wrap = $('homeRecentChats');
+      wrap.innerHTML = '';
+      if (state.chats.length === 0) {
+        wrap.innerHTML = `<div class="bg-white dark:bg-slate-800 rounded-2xl border border-dashed border-slate-300 dark:border-slate-700 p-4 text-center text-xs text-slate-500">No chats yet. Start a conversation above!</div>`;
+        return;
+      }
+      state.chats.slice(0, 3).forEach((c) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-3 flex items-center justify-between hover:border-blue-400 transition text-left cursor-pointer shadow-sm';
+        btn.innerHTML = `
+          <div class="min-w-0">
+            <p class="text-xs font-bold truncate">${escapeHtml(c.title)}</p>
+            <p class="text-[11px] text-slate-500 dark:text-slate-400">${escapeHtml(c.subject)} • ${escapeHtml(c.updatedAt)}</p>
+          </div>
+          <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400 shrink-0"></i>
+        `;
+        btn.addEventListener('click', () => {
+          state.activeChatId = c.id;
+          navigateTo('chat');
+        });
+        wrap.appendChild(btn);
+      });
+      lucide.createIcons();
+    }
+
+    $('homeNewChatBtn').addEventListener('click', () => startNewChat());
+    $('homeSeeAllStudyBtn').addEventListener('click', () => navigateTo('study'));
+    $('homeViewHistoryBtn').addEventListener('click', () => navigateTo('history'));
+    $('headerClassBadge').addEventListener('click', () => navigateTo('study'));
+
+    document.querySelectorAll('.shortcut-card').forEach((card) => {
+      card.addEventListener('click', () => {
+        const type = card.dataset.shortcut;
+        if (type === 'charts') { navigateTo('study'); switchStudyTab('visuals'); return; }
+        if (type === 'quiz') { navigateTo('study'); switchStudyTab('quiz'); return; }
+        const prompts = {
+          maths: 'Explain Pythagoras Theorem with a step-by-step example',
+          science: 'Explain Newton’s Second Law of Motion simply',
+          hindi: 'मुझे संज्ञा और उसके भेद आसान शब्दों में समझाओ',
+          exam: `Give me a smart exam revision plan for Class ${state.user.classLevel}`
+        };
+        startNewChat();
+        sendUserMessage(prompts[type] || 'Help me study');
+      });
+    });
+
+    // ==================== AI RESPONSE ENGINE (GEMINI-READY) ====================
+    function generateAIHtml(userText, hasImage) {
+      const q = userText.toLowerCase();
+      const lang = state.language;
+      const isHindi = lang === 'hi' || /[\u0900-\u097F]|hindi|samjhao|kya|kaise|mujhe/.test(q);
+
+      if (hasImage) {
+        return `<h4>Image Question Analysis 📸</h4>
+        <p>I've reviewed the image you uploaded! Here is how we can approach it step by step:</p>
+        <ol>
+          <li><strong>Identify given values:</strong> Note the key labels, numbers, or terms shown in your photo.</li>
+          <li><strong>Apply the core concept:</strong> Break the problem into smaller parts before calculating.</li>
+          <li><strong>Verify:</strong> Check units and signs in the final step.</li>
+        </ol>
+        <p class="text-[11px] text-blue-600 dark:text-blue-400 mt-1"><em>Tip: Connect the Gemini Vision backend in the included server bundle for live OCR &amp; diagram solving.</em></p>`;
+      }
+
+      if (/remember|yaad rakhna|i am in class/.test(q)) {
+        if (state.memoryEnabled) {
+          const m = q.match(/class\s*(\d+)/i);
+          if (m) {
+            state.user.classLevel = Math.min(12, Math.max(1, parseInt(m[1], 10)));
+            updateClassUI();
+            const existing = state.memories.find((x) => x.label === 'Class');
+            if (existing) existing.value = `Class ${state.user.classLevel}`;
+          }
+        }
+        return `<p>Got it! 😊 ${state.memoryEnabled ? "I've updated your private AI Memory so my explanations match your level." : "AI Memory is currently turned off in Profile settings, so I won't save this permanently."}</p>`;
+      }
+
+      if (/^(hi|hello|hey|namaste|kaise ho)/.test(q)) {
+        return isHindi
+          ? `<p>नमस्ते ${escapeHtml(state.user.name.split(' ')[0])}! 😊 मैं बहुत बढ़िया हूँ। आज आप किस विषय में मदद चाहते हैं — Maths, Science, या बस कुछ बात करनी है?</p>`
+          : `<p>Hey ${escapeHtml(state.user.name.split(' ')[0])}! 😊 Great to see you. How's your day going? Whether it's homework, exam prep, or just a quick chat, I'm right here!</p>`;
+      }
+
+      if (/sad|lonely|upset|cry|down|depressed|anxious|stressed|stress|tired|nervous|worried|scared|udas|dukhi|dar/.test(q) && !/plan/.test(q)) {
+        return isHindi
+          ? `<p>मैं समझ सकता हूँ कि अभी आप कैसा महसूस कर रहे हैं। 💙 यह बिल्कुल सामान्य है—थोड़ी गहरी सांस लें।</p>
+          <ul>
+            <li><strong>खुद पर थोड़ा ध्यान दें:</strong> 5 मिनट पानी पिएं, टहलें या शांत संगीत सुनें।</li>
+            <li><strong>बात करें:</strong> अगर आप चाहें तो मुझे खुलकर बता सकते हैं कि क्या परेशान कर रहा है।</li>
+          </ul>
+          <p>मैं यहाँ आपकी बात सुनने के लिए हूँ—सिर्फ पढ़ाई ही नहीं, किसी भी बात पर! 🤗</p>`
+          : `<p>I hear you, and it's completely okay to feel this way. 💙 Take a slow, deep breath—you don't have to carry everything alone.</p>
+          <ul>
+            <li><strong>Pause for 5 minutes:</strong> Drink some water, stretch, or step away from screens for a bit.</li>
+            <li><strong>Talk it out:</strong> Whether it's school pressure, friends, or just a rough day, I'm here to listen—no judgment.</li>
+          </ul>
+          <p>Want to tell me what's on your mind right now? 🤗</p>`;
+      }
+
+      if (/happy|excited|proud|great|awesome|won|passed|khush|maza/.test(q)) {
+        return `<p>That's awesome to hear! 🎉🥳 Your energy just made my day too. Tell me more—what happened that made you feel so good?</p>`;
+      }
+
+      if (/friend|crush|parents|family|fight|advice|confidence|lonely|bored|joke|movie|music|game|cricket|hobby|life|focus|sleep/.test(q)) {
+        if (/joke/.test(q)) {
+          return `<p>Here's one for you 😄: Why did the student eat his homework? Because the teacher said it was a piece of cake! 🍰 Want another one or just want to chat?</p>`;
+        }
+        return `<p>I'm always up for a real conversation beyond textbooks! 💬</p>
+        <p>About <strong>"${escapeHtml(userText)}"</strong> — it's totally valid to have doubts about life, friendships, habits, or how you're feeling. Tell me a little more about the situation so I can give you thoughtful, honest advice. 😊</p>`;
+      }
+
+      if (isHindi) {
+        return `<h4>सरल व्याख्या (Class ${state.user.classLevel}) ✨</h4>
+        <p>आपका प्रश्न बहुत अच्छा है: <strong>"${escapeHtml(userText)}"</strong></p>
+        <ol>
+          <li><strong>मुख्य विचार:</strong> किसी भी विषय को छोटे हिस्सों में बाँटकर समझना सबसे आसान होता है।</li>
+          <li><strong>उदाहरण:</strong> इसे रोज़मर्रा की ज़िंदगी से जोड़कर देखें ताकि परीक्षा में याद रहे।</li>
+        </ol>
+        <p>क्या आप इस पर एक छोटा अभ्यास प्रश्न (Quiz) हल करना चाहेंगे? 😊</p>`;
+      }
+
+      if (/solve|equation|pythagoras|math|x\^2|x²|algebra/.test(q)) {
+        return `<h4>Step-by-Step Maths Breakdown 📐</h4>
+        <p>Great question for <strong>Class ${state.user.classLevel}</strong>! Let's solve it cleanly:</p>
+        <ol>
+          <li><strong>Write down what's given:</strong> Identify the known variables and formula.</li>
+          <li><strong>Substitute carefully:</strong> Plug values in one step at a time.</li>
+          <li><strong>Simplify:</strong> Combine like terms to isolate the answer.</li>
+        </ol>
+        <table class="w-full text-xs border-collapse mt-2">
+          <tr class="bg-blue-50 dark:bg-slate-700"><th class="p-1.5 text-left">Step</th><th class="p-1.5 text-left">Tip</th></tr>
+          <tr><td class="p-1.5 border-t border-slate-200 dark:border-slate-600">1. Formula</td><td class="p-1.5 border-t border-slate-200 dark:border-slate-600">Always write it first for full marks</td></tr>
+          <tr><td class="p-1.5 border-t border-slate-200 dark:border-slate-600">2. Units</td><td class="p-1.5 border-t border-slate-200 dark:border-slate-600">Check cm, m, or ° at the end</td></tr>
+        </table>`;
+      }
+
+      return `<h4>Here's a Clear Explanation ✨</h4>
+      <p>Tailored for <strong>Class ${state.user.classLevel}</strong>:</p>
+      <ul>
+        <li><strong>Core Concept:</strong> "${escapeHtml(userText)}" connects directly to foundational principles you can apply in exams.</li>
+        <li><strong>Why it matters:</strong> Understanding the <em>why</em> makes memorising definitions 3× easier.</li>
+      </ul>
+      <p>Would you like a quick example, a Hindi translation, or a 3-question mini quiz on this? 😊</p>`;
+    }
+
+    // ==================== CHAT SCREEN ====================
+    function getActiveChat() {
+      return state.chats.find((c) => c.id === state.activeChatId) || null;
+    }
+
+    function startNewChat() {
+      const id = 'c' + Date.now();
+      state.chats.unshift({
+        id,
+        title: 'New Conversation',
+        subject: 'General',
+        updatedAt: 'Just now',
+        messages: []
+      });
+      state.activeChatId = id;
+      navigateTo('chat');
+      renderHomeRecent();
+    }
+
+    function renderChat() {
+      const chat = getActiveChat();
+      const box = $('chatMessages');
+      $('chatMemoryIndicator').textContent = state.memoryEnabled ? 'Memory ON' : 'Memory OFF';
+      $('chatMemoryIndicator').className = state.memoryEnabled
+        ? 'text-[10px] font-semibold px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300'
+        : 'text-[10px] font-semibold px-2 py-0.5 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300';
+
+      if (!chat || chat.messages.length === 0) {
+        box.innerHTML = `
+          <div class="h-full flex flex-col items-center justify-center text-center px-6 py-10">
+            <div class="w-16 h-16 rounded-3xl bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 flex items-center justify-center mb-3 shadow-sm">
+              <i data-lucide="sparkles" class="w-8 h-8"></i>
+            </div>
+            <h3 class="text-base font-bold">Start a New Conversation</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 max-w-xs">Ask Maths, Science, Hindi, English, or just say hello. Upload a photo or use your mic anytime!</p>
+            <div class="flex flex-wrap justify-center gap-2 mt-4">
+              <button type="button" class="empty-chip px-3 py-1.5 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-medium hover:border-blue-400 cursor-pointer">Solve x² - 5x + 6 = 0</button>
+              <button type="button" class="empty-chip px-3 py-1.5 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-medium hover:border-blue-400 cursor-pointer">Explain Newton's Laws</button>
+              <button type="button" class="empty-chip px-3 py-1.5 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-medium hover:border-blue-400 cursor-pointer">हिंदी में मदद करें</button>
+              <button type="button" class="empty-chip px-3 py-1.5 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-medium hover:border-blue-400 cursor-pointer">I'm feeling stressed today 💙</button>
+            </div>
+          </div>
+        `;
+        box.querySelectorAll('.empty-chip').forEach((chip) => {
+          chip.addEventListener('click', () => sendUserMessage(chip.textContent));
+        });
+        lucide.createIcons();
+        return;
+      }
+
+      box.innerHTML = '';
+      chat.messages.forEach((m, idx) => {
+        const wrap = document.createElement('div');
+        wrap.className = `animate-msg flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`;
+
+        if (m.role === 'user') {
+          wrap.innerHTML = `
+            <div class="max-w-[82%] rounded-2xl rounded-br-sm bg-blue-600 text-white px-3.5 py-2.5 text-sm shadow-sm space-y-2">
+              ${m.image ? `<img src="${m.image}" alt="Uploaded question" class="rounded-xl max-h-40 object-cover border border-white/20" />` : ''}
+              <p class="leading-relaxed">${escapeHtml(m.text)}</p>
+            </div>
+          `;
+        } else {
+          wrap.innerHTML = `
+            <div class="max-w-[88%] rounded-2xl rounded-bl-sm bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3.5 py-3 text-sm shadow-sm space-y-2">
+              <div class="prose prose-sm dark:prose-invert max-w-none text-slate-800 dark:text-slate-100 leading-relaxed space-y-1.5">${m.html}</div>
+              <div class="flex items-center gap-3 pt-1.5 border-t border-slate-100 dark:border-slate-700 text-[11px] text-slate-500">
+                <button type="button" data-action="copy" data-idx="${idx}" class="msg-act inline-flex items-center gap-1 hover:text-blue-600 cursor-pointer"><i data-lucide="copy" class="w-3 h-3"></i> Copy</button>
+                <button type="button" data-action="regen" data-idx="${idx}" class="msg-act inline-flex items-center gap-1 hover:text-blue-600 cursor-pointer"><i data-lucide="refresh-cw" class="w-3 h-3"></i> Regenerate</button>
+                <button type="button" data-action="share" data-idx="${idx}" class="msg-act inline-flex items-center gap-1 hover:text-blue-600 cursor-pointer"><i data-lucide="share-2" class="w-3 h-3"></i> Share</button>
+              </div>
+            </div>
+          `;
+        }
+        box.appendChild(wrap);
+      });
+
+      box.querySelectorAll('.msg-act').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const idx = parseInt(btn.dataset.idx, 10);
+          const msg = chat.messages[idx];
+          const plain = msg.html.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+          if (btn.dataset.action === 'copy') copyText(plain);
+          if (btn.dataset.action === 'share') {
+            if (navigator.share) navigator.share({ title: 'AI-4-Students Answer', text: plain }).catch(() => copyText(plain));
+            else copyText(plain);
+          }
+          if (btn.dataset.action === 'regen') {
+            const prevUser = chat.messages[idx - 1];
+            if (prevUser) {
+              $('typingIndicator').classList.remove('hidden');
+              fetchAIResponseHtml(prevUser.text, prevUser.image, chat.messages.slice(0, idx - 1)).then((html) => {
+                $('typingIndicator').classList.add('hidden');
+                msg.html = html + `<p class="text-[10px] text-slate-400 mt-1">↻ Regenerated</p>`;
+                renderChat();
+              });
+            }
+          }
+        });
+      });
+
+      lucide.createIcons();
+      box.scrollTop = box.scrollHeight;
+    }
+
+    function markdownToSimpleHtml(md) {
+      const escaped = escapeHtml(md);
+      return escaped
+        .replace(/^### (.*)$/gm, '<h4>$1</h4>')
+        .replace(/^## (.*)$/gm, '<h4>$1</h4>')
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\n- (.*)/g, '<li>$1</li>')
+        .replace(/\n\d+\. (.*)/g, '<li>$1</li>')
+        .replace(/\n\n/g, '</p><p>')
+        .replace(/\n/g, '<br/>')
+        .replace(/^/, '<p>')
+        .replace(/$/, '</p>');
+    }
+
+    async function fetchAIResponseHtml(userText, imageDataUrl, historySlice) {
+      if (!BACKEND_CHAT_URL) {
+        await new Promise((r) => setTimeout(r, 550));
+        return generateAIHtml(userText, !!imageDataUrl);
+      }
+
+      try {
+        const res = await fetch(BACKEND_CHAT_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            message: userText,
+            history: (historySlice || []).slice(-6).map((m) => ({
+              role: m.role,
+              text: m.text || (m.html ? m.html.replace(/<[^>]+>/g, ' ') : '')
+            })),
+            classLevel: state.user.classLevel,
+            language: state.language,
+            memories: state.memoryEnabled ? state.memories : [],
+            imageBase64: imageDataUrl || undefined
+          })
+        });
+        const data = await res.json();
+        if (!res.ok || !data.reply) throw new Error(data.error || 'Server error');
+        return markdownToSimpleHtml(data.reply);
+      } catch (err) {
+        return generateAIHtml(userText, !!imageDataUrl);
+      }
+    }
+
+    async function sendUserMessage(textOverride) {
+      const inputEl = $('chatInput');
+      const raw = (textOverride !== undefined ? textOverride : inputEl.value).trim();
+      if (!raw && !state.pendingImage) return;
+
+      let chat = getActiveChat();
+      if (!chat) { startNewChat(); chat = getActiveChat(); }
+
+      const userText = raw || 'Please explain this image.';
+      if (chat.messages.length === 0) {
+        chat.title = userText.slice(0, 34) + (userText.length > 34 ? '…' : '');
+      }
+      chat.updatedAt = 'Just now';
+      const imgData = state.pendingImage;
+      const priorHistory = [...chat.messages];
+      chat.messages.push({ id: 'u' + Date.now(), role: 'user', text: userText, image: imgData });
+
+      clearPendingImages();
+      if (textOverride === undefined) inputEl.value = '';
+      renderChat();
+      renderHomeRecent();
+
+      $('typingIndicator').classList.remove('hidden');
+      const html = await fetchAIResponseHtml(userText, imgData, priorHistory);
+      $('typingIndicator').classList.add('hidden');
+      chat.messages.push({ id: 'a' + Date.now(), role: 'ai', html });
+      renderChat();
+    }
+
+    $('chatSendBtn').addEventListener('click', () => sendUserMessage());
+    $('chatInput').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendUserMessage(); }
+    });
+    $('homeSendBtn').addEventListener('click', () => {
+      const val = $('homePromptInput').value.trim();
+      if (!val && !state.pendingImage) return;
+      $('homePromptInput').value = '';
+      navigateTo('chat');
+      sendUserMessage(val);
+    });
+    $('chatNewBtn').addEventListener('click', startNewChat);
+    $('chatClearBtn').addEventListener('click', () => {
+      const chat = getActiveChat();
+      if (chat) { chat.messages = []; renderChat(); showToast('Chat cleared'); }
+    });
+    $('chatLangSelect').addEventListener('change', (e) => {
+      state.language = e.target.value;
+      $('profileLangSelect').value = e.target.value;
+      showToast('Language updated');
+    });
+
+    // ==================== IMAGE & VOICE INPUT ====================
+    function handleImagePick(file) {
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        state.pendingImage = ev.target.result;
+        ['home', 'chat'].forEach((p) => {
+          $(`${p}ImagePreview`).src = ev.target.result;
+          $(`${p}ImageName`).textContent = file.name;
+          $(`${p}ImagePreviewWrap`).classList.remove('hidden');
+        });
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function clearPendingImages() {
+      state.pendingImage = null;
+      ['home', 'chat'].forEach((p) => {
+        $(`${p}ImagePreviewWrap`).classList.add('hidden');
+        $(`${p}ImageInput`).value = '';
+      });
+    }
+
+    $('homeImageInput').addEventListener('change', (e) => handleImagePick(e.target.files[0]));
+    $('chatImageInput').addEventListener('change', (e) => handleImagePick(e.target.files[0]));
+    $('homeRemoveImgBtn').addEventListener('click', clearPendingImages);
+    $('chatRemoveImgBtn').addEventListener('click', clearPendingImages);
+
+    function openVoiceModal(targetScreen) {
+      openGenericModal('Voice Assistant 🎙️', `
+        <div class="text-center py-3 space-y-3">
+          <div class="w-14 h-14 mx-auto rounded-full bg-blue-100 dark:bg-blue-900/40 text-blue-600 flex items-center justify-center animate-pulse">
+            <i data-lucide="mic" class="w-7 h-7"></i>
+          </div>
+          <p class="text-xs text-slate-600 dark:text-slate-300">Tap a sample voice query or speak (if supported by your browser):</p>
+          <div class="flex flex-wrap justify-center gap-2">
+            <button type="button" class="voice-sample px-3 py-1.5 rounded-xl bg-blue-50 dark:bg-slate-700 text-blue-700 dark:text-blue-300 font-semibold cursor-pointer">"Explain photosynthesis in Hindi"</button>
+            <button type="button" class="voice-sample px-3 py-1.5 rounded-xl bg-blue-50 dark:bg-slate-700 text-blue-700 dark:text-blue-300 font-semibold cursor-pointer">"Solve x² - 5x + 6 = 0"</button>
+          </div>
+        </div>
+      `);
+      document.querySelectorAll('.voice-sample').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const phrase = btn.textContent.replace(/"/g, '');
+          closeGenericModal();
+          if (targetScreen === 'home') navigateTo('chat');
+          sendUserMessage(phrase);
+        });
+      });
+      lucide.createIcons();
+    }
+
+    $('homeMicBtn').addEventListener('click', () => openVoiceModal('home'));
+    $('homeVoiceShortcut').addEventListener('click', () => openVoiceModal('home'));
+    $('chatMicBtn').addEventListener('click', () => openVoiceModal('chat'));
+
+    // ==================== STUDY DASHBOARD & CHARTS ====================
+    function updateClassUI() {
+      $('headerClassBadge').textContent = `Class ${state.user.classLevel}`;
+      $('profileClassDisplay').textContent = `Class ${state.user.classLevel} • CBSE`;
+      renderClassPills();
+    }
+
+    function renderClassPills() {
+      const wrap = $('classPills');
+      wrap.innerHTML = '';
+      for (let i = 1; i <= 12; i++) {
+        const b = document.createElement('button');
+        b.type = 'button';
+        const active = state.user.classLevel === i;
+        b.className = `shrink-0 px-3 py-1 rounded-full text-xs font-semibold cursor-pointer transition ${active ? 'bg-blue-600 text-white shadow-sm' : 'bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300'}`;
+        b.textContent = `Class ${i}`;
+        b.addEventListener('click', () => {
+          state.user.classLevel = i;
+          updateClassUI();
+          showToast(`Switched to Class ${i}`);
+        });
+        wrap.appendChild(b);
+      }
+    }
+
+    function switchStudyTab(tab) {
+      ['subjects', 'visuals', 'quiz'].forEach((t) => {
+        $(`study-${t}`).classList.toggle('hidden', t !== tab);
+      });
+      document.querySelectorAll('.study-tab-btn').forEach((btn) => {
+        const active = btn.dataset.studytab === tab;
+        btn.className = `study-tab-btn py-1.5 rounded-lg text-xs font-semibold cursor-pointer ${active ? 'bg-white dark:bg-slate-700 text-blue-600 dark:text-blue-300 shadow-sm' : 'text-slate-600 dark:text-slate-400'}`;
+      });
+      if (tab === 'visuals' || tab === 'subjects') initCharts();
+    }
+
+    document.querySelectorAll('.study-tab-btn').forEach((btn) => {
+      btn.addEventListener('click', () => switchStudyTab(btn.dataset.studytab));
+    });
+
+    document.querySelectorAll('.subject-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const subj = btn.dataset.subject;
+        startNewChat();
+        sendUserMessage(`Help me with Class ${state.user.classLevel} ${subj}`);
+      });
+    });
+
+    document.querySelectorAll('.study-mode-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        startNewChat();
+        sendUserMessage(`I need ${btn.dataset.mode} for Class ${state.user.classLevel}`);
+      });
+    });
+
+    let progressChartInstance = null;
+    let mathChartInstance = null;
+
+    function initCharts() {
+      const textColor = state.darkMode ? '#cbd5e1' : '#475569';
+      const gridColor = state.darkMode ? 'rgba(148,163,184,0.15)' : 'rgba(148,163,184,0.25)';
+
+      const progCtx = $('progressChart');
+      if (progCtx && typeof Chart !== 'undefined') {
+        if (progressChartInstance) progressChartInstance.destroy();
+        progressChartInstance = new Chart(progCtx, {
+          type: 'bar',
+          data: {
+            labels: ['Maths', 'Science', 'English', 'Hindi', 'Social', 'Comp'],
+            datasets: [{
+              label: 'Mastery %',
+              data: [78, 82, 74, 85, 64, 90],
+              backgroundColor: ['#3b82f6', '#10b981', '#6366f1', '#f59e0b', '#a855f7', '#06b6d4'],
+              borderRadius: 8
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+              y: { beginAtZero: true, max: 100, ticks: { color: textColor, font: { size: 10 } }, grid: { color: gridColor } },
+              x: { ticks: { color: textColor, font: { size: 10 } }, grid: { display: false } }
+            }
+          }
+        });
+      }
+      updateMathGraph();
+    }
+
+    function updateMathGraph() {
+      const ctx = $('mathGraphCanvas');
+      if (!ctx || typeof Chart === 'undefined') return;
+      const type = $('mathGraphType').value;
+      const a = parseFloat($('paramASlider').value);
+      const c = parseFloat($('paramCSlider').value);
+      $('paramAVal').textContent = a;
+      $('paramCVal').textContent = c;
+
+      const xs = [];
+      const ys = [];
+      for (let x = -5; x <= 5; x += 0.5) {
+        xs.push(x);
+        if (type === 'quadratic') ys.push(a * x * x + c);
+        else if (type === 'linear') ys.push(a * x + c);
+        else ys.push(a * Math.sin(x) + c * 0.2);
+      }
+
+      if (type === 'quadratic') $('mathFormulaLabel').textContent = `y = ${a}x² + (${c})`;
+      else if (type === 'linear') $('mathFormulaLabel').textContent = `y = ${a}x + (${c})`;
+      else $('mathFormulaLabel').textContent = `y = ${a}·sin(x) + (${(c * 0.2).toFixed(1)})`;
+
+      if (mathChartInstance) mathChartInstance.destroy();
+      mathChartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: xs,
+          datasets: [{
+            label: 'y',
+            data: ys,
+            borderColor: '#2563eb',
+            backgroundColor: 'rgba(37,99,235,0.12)',
+            fill: true,
+            tension: 0.3,
+            pointRadius: 2
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
+          scales: {
+            x: { ticks: { font: { size: 10 } } },
+            y: { ticks: { font: { size: 10 } } }
+          }
+        }
+      });
+    }
+
+    $('mathGraphType').addEventListener('change', updateMathGraph);
+    $('paramASlider').addEventListener('input', updateMathGraph);
+    $('paramCSlider').addEventListener('input', updateMathGraph);
+
+    // ==================== QUIZ & NOTES ====================
+    function renderQuiz() {
+      const item = QUIZ_BANK[state.quizIndex];
+      $('quizScoreBadge').textContent = `Score: ${state.quizScore}/${QUIZ_BANK.length}`;
+      $('quizQuestionText').textContent = `Q${state.quizIndex + 1}. ${item.q}`;
+      $('quizFeedback').textContent = '';
+      state.quizAnswered = false;
+      const wrap = $('quizOptions');
+      wrap.innerHTML = '';
+      item.options.forEach((opt, i) => {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'w-full text-left px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-600 text-xs font-medium hover:border-blue-500 cursor-pointer transition';
+        b.textContent = opt;
+        b.addEventListener('click', () => {
+          if (state.quizAnswered) return;
+          state.quizAnswered = true;
+          if (i === item.answer) {
+            state.quizScore++;
+            b.className = 'w-full text-left px-3.5 py-2 rounded-xl border-2 border-emerald-500 bg-emerald-50 dark:bg-emerald-900/30 text-xs font-semibold';
+            $('quizFeedback').textContent = 'Correct! 🎉';
+            $('quizFeedback').className = 'text-xs font-semibold text-emerald-600';
+          } else {
+            b.className = 'w-full text-left px-3.5 py-2 rounded-xl border-2 border-rose-500 bg-rose-50 dark:bg-rose-900/30 text-xs font-semibold';
+            $('quizFeedback').textContent = `Answer: ${item.options[item.answer]}`;
+            $('quizFeedback').className = 'text-xs font-semibold text-rose-600';
+          }
+          $('quizScoreBadge').textContent = `Score: ${state.quizScore}/${QUIZ_BANK.length}`;
+        });
+        wrap.appendChild(b);
+      });
+    }
+
+    $('quizNextBtn').addEventListener('click', () => {
+      state.quizIndex = (state.quizIndex + 1) % QUIZ_BANK.length;
+      if (state.quizIndex === 0) state.quizScore = 0;
+      renderQuiz();
+    });
+
+    $('saveStudyNoteBtn').addEventListener('click', () => {
+      try { localStorage.setItem('ai4s_note', $('studyNotesArea').value); } catch (e) {}
+      showToast('Study note saved!');
+    });
+
+    // ==================== HISTORY SCREEN ====================
+    function renderHistory() {
+      const q = $('historySearchInput').value.toLowerCase();
+      const wrap = $('historyList');
+      wrap.innerHTML = '';
+      const filtered = state.chats.filter((c) => c.title.toLowerCase().includes(q) || c.subject.toLowerCase().includes(q));
+      if (filtered.length === 0) {
+        wrap.innerHTML = `<p class="text-center text-xs text-slate-500 py-8">No matching chats found.</p>`;
+        return;
+      }
+      filtered.forEach((c) => {
+        const card = document.createElement('div');
+        card.className = 'bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-3.5 flex items-center justify-between gap-2 shadow-sm';
+        card.innerHTML = `
+          <button type="button" class="open-hist flex-1 text-left min-w-0 cursor-pointer">
+            <p class="text-xs font-bold truncate">${escapeHtml(c.title)}</p>
+            <p class="text-[11px] text-slate-500 dark:text-slate-400">${escapeHtml(c.subject)} • ${c.messages.length} msgs • ${escapeHtml(c.updatedAt)}</p>
+          </button>
+          <button type="button" class="del-hist p-1.5 rounded-lg text-slate-400 hover:text-rose-500 cursor-pointer">
+            <i data-lucide="trash-2" class="w-4 h-4"></i>
+          </button>
+        `;
+        card.querySelector('.open-hist').addEventListener('click', () => {
+          state.activeChatId = c.id;
+          navigateTo('chat');
+        });
+        card.querySelector('.del-hist').addEventListener('click', () => {
+          state.chats = state.chats.filter((x) => x.id !== c.id);
+          renderHistory();
+          renderHomeRecent();
+          showToast('Chat deleted');
+        });
+        wrap.appendChild(card);
+      });
+      lucide.createIcons();
+    }
+
+    $('historySearchInput').addEventListener('input', renderHistory);
+    $('clearAllHistoryBtn').addEventListener('click', () => {
+      state.chats = [];
+      state.activeChatId = null;
+      renderHistory();
+      renderHomeRecent();
+      showToast('All chat history cleared');
+    });
+
+    // ==================== MEMORY & PROFILE ====================
+    function renderMemories() {
+      const wrap = $('memoryList');
+      wrap.innerHTML = '';
+      if (!state.memoryEnabled) {
+        wrap.innerHTML = `<p class="text-xs text-slate-500 italic">AI Memory is turned off. Turn it on above to personalize your learning.</p>`;
+        return;
+      }
+      state.memories.forEach((m) => {
+        const row = document.createElement('div');
+        row.className = 'p-2.5 rounded-xl bg-slate-50 dark:bg-slate-700/60 flex items-center justify-between gap-2 text-xs';
+        row.innerHTML = `
+          <div class="min-w-0">
+            <span class="font-bold text-blue-600 dark:text-blue-400">${escapeHtml(m.label)}:</span>
+            <span class="text-slate-700 dark:text-slate-200">${escapeHtml(m.value)}</span>
+          </div>
+          <button type="button" class="del-mem text-slate-400 hover:text-rose-500 p-1 cursor-pointer"><i data-lucide="x" class="w-3.5 h-3.5"></i></button>
+        `;
+        row.querySelector('.del-mem').addEventListener('click', () => {
+          state.memories = state.memories.filter((x) => x.id !== m.id);
+          renderMemories();
+          showToast('Memory removed');
+        });
+        wrap.appendChild(row);
+      });
+      lucide.createIcons();
+    }
+
+    $('memoryToggle').addEventListener('change', (e) => {
+      state.memoryEnabled = e.target.checked;
+      renderMemories();
+      showToast(state.memoryEnabled ? 'AI Memory enabled' : 'AI Memory paused');
+    });
+
+    $('profileLangSelect').addEventListener('change', (e) => {
+      state.language = e.target.value;
+      $('chatLangSelect').value = e.target.value;
+      showToast('Preferred language updated');
+    });
+
+    $('addMemoryBtn').addEventListener('click', () => {
+      openGenericModal('Add AI Memory', `
+        <form id="newMemForm" class="space-y-2.5">
+          <input id="memLabelIn" type="text" required placeholder="Topic (e.g. Exam Goal)" class="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 text-xs" />
+          <input id="memValIn" type="text" required placeholder="Detail (e.g. Board Exams in March)" class="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 text-xs" />
+          <button type="submit" class="w-full py-2 rounded-xl bg-blue-600 text-white text-xs font-semibold cursor-pointer">Save to Memory</button>
+        </form>
+      `);
+      $('newMemForm').addEventListener('submit', (ev) => {
+        ev.preventDefault();
+        state.memories.push({ id: 'm' + Date.now(), label: $('memLabelIn').value.trim(), value: $('memValIn').value.trim() });
+        closeGenericModal();
+        renderMemories();
+        showToast('Memory saved!');
+      });
+    });
+
+    // ==================== AUTH MODAL ====================
+    function setAuthMode(mode) {
+      state.authMode = mode;
+      $('authTitle').textContent = mode === 'login' ? 'Welcome Back' : mode === 'signup' ? 'Create Student Account' : 'Reset Password';
+      $('authNameWrap').classList.toggle('hidden', mode !== 'signup');
+      $('authPasswordWrap').classList.toggle('hidden', mode === 'forgot');
+      $('authSubmitBtn').textContent = mode === 'login' ? 'Sign In' : mode === 'signup' ? 'Sign Up & Verify Email' : 'Send Reset Link';
+      document.querySelectorAll('.auth-tab').forEach((t) => {
+        const active = t.dataset.authmode === mode;
+        t.className = `auth-tab flex-1 py-1.5 rounded-lg cursor-pointer ${active ? 'bg-white dark:bg-slate-600 text-blue-600 dark:text-white shadow-sm' : 'text-slate-500 dark:text-slate-300'}`;
+      });
+    }
+
+    document.querySelectorAll('.auth-tab').forEach((t) => t.addEventListener('click', () => setAuthMode(t.dataset.authmode)));
+    $('openAuthModalBtn').addEventListener('click', () => { setAuthMode('login'); $('authModal').classList.remove('hidden'); });
+    $('logoutBtn').addEventListener('click', () => { setAuthMode('login'); $('authModal').classList.remove('hidden'); showToast('Signed out'); });
+    $('closeAuthBtn').addEventListener('click', () => $('authModal').classList.add('hidden'));
+
+    $('authForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (state.authMode === 'forgot') {
+        showToast('Password reset email sent!');
+        $('authModal').classList.add('hidden');
+        return;
+      }
+      const name = $('authNameInput').value.trim() || state.user.name;
+      const email = $('authEmailInput').value.trim() || state.user.email;
+      state.user.name = name;
+      state.user.email = email;
+      state.user.verified = state.authMode === 'login';
+      $('profileNameDisplay').textContent = name;
+      $('profileEmailDisplay').textContent = email;
+      $('profileAvatarInitial').textContent = name[0].toUpperCase();
+      $('homeGreeting').textContent = `Namaste, ${name.split(' ')[0]} 👋`;
+      if (state.authMode === 'signup') {
+        $('authVerifyBanner').classList.remove('hidden');
+        $('profileVerifiedBadge').textContent = 'Pending';
+      } else {
+        $('authModal').classList.add('hidden');
+        showToast('Signed in!');
+      }
+    });
+
+    $('authVerifyNowBtn').addEventListener('click', () => {
+      state.user.verified = true;
+      $('profileVerifiedBadge').textContent = 'Verified';
+      $('authVerifyBanner').classList.add('hidden');
+      $('authModal').classList.add('hidden');
+      showToast('Email verified!');
+    });
+
+    $('googleSignInBtn').addEventListener('click', () => {
+      state.user.verified = true;
+      $('authModal').classList.add('hidden');
+      showToast('Signed in with Google!');
+    });
+
+    // ==================== GENERIC MODAL ====================
+    function openGenericModal(title, html) {
+      $('genericModalTitle').textContent = title;
+      $('genericModalBody').innerHTML = html;
+      $('genericModal').classList.remove('hidden');
+    }
+    function closeGenericModal() { $('genericModal').classList.add('hidden'); }
+    $('closeGenericModalBtn').addEventListener('click', closeGenericModal);
+
+    document.querySelectorAll('.info-modal-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const k = btn.dataset.info;
+        if (k === 'privacy') openGenericModal('Privacy & Consent', '<p>Your AI Memory and chat history are stored privately for your account only. You can toggle AI Memory off or delete any saved memory anytime.</p>');
+        if (k === 'help') openGenericModal('Help & Support', '<p>Need help with AI-4-Students? Contact Tanuj Industries Student Support or ask the AI assistant directly in the Chat tab.</p>');
+        if (k === 'about') openGenericModal('About AI-4-Students', '<p><strong>AI-4-Students</strong> is built by <strong>Tanuj Industries</strong>, powered by Google Gemini AI and Firebase-ready architecture for Classes 1 to 12 in English &amp; हिंदी.</p>');
+      });
+    });
+
+    // ==================== INIT ====================
+    try {
+      const savedNote = localStorage.getItem('ai4s_note');
+      if (savedNote) $('studyNotesArea').value = savedNote;
+    } catch (e) {}
+    updateClassUI();
+    renderHomeRecent();
+    renderQuiz();
+    renderMemories();
+    lucide.createIcons();
+  </script>
+</body>
+</html>
